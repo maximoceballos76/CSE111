@@ -5,8 +5,8 @@ SPECIAL=["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "=", "+", "
 
 def main ():
   user_password = input("Password check: ")
-  word_complex = word_complexity(user_password)
-  print(word_complex)
+  strength = password_strength(user_password)
+  print(f"Password strength score: {strength}")
 
 def word_complexity (word):
   has_lower = word_has_character(word, LOWER)
@@ -24,5 +24,50 @@ def word_has_character (word, character_list):
       has_character = True
       break
   return has_character
+
+def word_in_file(word, filename, case_sensitive = False):
+  with open(filename, "r", encoding="utf-8") as file:
+    for line in file:
+      if case_sensitive:
+        if word == line.strip():
+          return True
+      else:
+        if word.lower() == line.strip().lower():
+          return True
+  return False
+
+def password_strength(password, min_length=10, strong_length=16):
+    length = len(password)
+    
+    if length < min_length:
+        print(f"Password score is 0 because it doesn't have the minimum amount of characters ({min_length})")
+        return 0
+
+    check1 = word_in_file(password, "toppasswords.txt")
+    check2 = word_in_file(password, "wordlist.txt")
+
+    if check1 or check2:
+        if check1:
+            print("Password score is 0 because it is in the top 1000 passwords list")
+        if check2:
+            print("Password score is 0 because it is in the wordlist")
+        return 0
+
+    if length >= strong_length:
+        length_strength = 1
+    else:
+        length_strength = 0
+
+    complexity = word_complexity(password)
+
+    total_score = length_strength + complexity
+    return total_score
+
+if __name__ == "__main__":
+    main()
+    
+  
+
+
 
 main()
