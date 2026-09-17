@@ -4,9 +4,11 @@ DIGITS=["0","1","2","3","4","5","6","7","8","9"]
 SPECIAL=["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "=", "+", "[", "]", "{", "}", "|", ";", ":", "'", "\"", ",", ".", "<", ">", "?", "/", "\\","`", "~"]
 
 def main ():
-  user_password = input("Password check: ")
-  strength = password_strength(user_password)
-  print(f"Password strength score: {strength}")
+  user_password = "r"
+  while user_password.lower() != "q":
+    user_password = input("Password check: ")
+    strength = password_strength(user_password)
+    print(f"Password strength score: {strength}")
 
 def word_complexity (word):
   has_lower = word_has_character(word, LOWER)
@@ -36,38 +38,28 @@ def word_in_file(word, filename, case_sensitive = False):
           return True
   return False
 
-def password_strength(password, min_length=10, strong_length=16):
-    length = len(password)
-    
-    if length < min_length:
-        print(f"Password score is 0 because it doesn't have the minimum amount of characters ({min_length})")
-        return 0
+def password_strength(password, min_length = 10, strong_length = 16):
+  length = len(password)
+  length_strength = 0
 
-    check1 = word_in_file(password, "toppasswords.txt")
-    check2 = word_in_file(password, "wordlist.txt")
+  if length < min_length:
+    print("Password is too short.")
+    return 0
+  if length >= strong_length:
+    length_strength = 1
 
-    if check1 or check2:
-        if check1:
-            print("Password score is 0 because it is in the top 1000 passwords list")
-        if check2:
-            print("Password score is 0 because it is in the wordlist")
-        return 0
+  check1 = word_in_file(password, "toppasswords.txt")
+  check2 = word_in_file(password, "wordlist.txt")
 
-    if length >= strong_length:
-        length_strength = 1
-    else:
-        length_strength = 0
+  if check1 or check2:
+    if check1:
+      print("Password is in the top passwords list.")
+    if check2:
+      print("Password is in the word list.")
+    return 0
 
-    complexity = word_complexity(password)
-
-    total_score = length_strength + complexity
-    return total_score
-
-if __name__ == "__main__":
-    main()
-    
-  
-
-
+  complexity = word_complexity(password)
+  total_strength = length_strength + complexity
+  return total_strength
 
 main()
