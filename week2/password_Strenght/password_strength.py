@@ -1,12 +1,17 @@
+from turtle import st
+
+
 LOWER=["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 UPPER=["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 DIGITS=["0","1","2","3","4","5","6","7","8","9"]
 SPECIAL=["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "=", "+", "[", "]", "{", "}", "|", ";", ":", "'", "\"", ",", ".", "<", ">", "?", "/", "\\","`", "~"]
 
 def main ():
-  user_password = "r"
+  user_password = input("Password check: ")
   while user_password.lower() != "q":
     user_password = input("Password check: ")
+    if user_password.lower() == "q":
+      break
     strength = password_strength(user_password)
     print(f"Password strength score: {strength}")
 
@@ -39,14 +44,6 @@ def word_in_file(word, filename, case_sensitive = False):
   return False
 
 def password_strength(password, min_length = 10, strong_length = 16):
-  length = len(password)
-  length_strength = 0
-
-  if length < min_length:
-    print("Password is too short.")
-    return 0
-  if length >= strong_length:
-    length_strength = 1
 
   check1 = word_in_file(password, "toppasswords.txt")
   check2 = word_in_file(password, "wordlist.txt")
@@ -57,6 +54,16 @@ def password_strength(password, min_length = 10, strong_length = 16):
     if check2:
       print("Password is in the word list.")
     return 0
+
+  length = len(password)
+  length_strength = 0
+
+  if length < min_length:
+    print("Password is too short.")
+    return 0
+  if length >= strong_length:
+    length_strength = 1
+
 
   complexity = word_complexity(password)
   total_strength = length_strength + complexity
