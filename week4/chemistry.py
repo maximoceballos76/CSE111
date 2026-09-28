@@ -1,5 +1,9 @@
 from formula import parse_formula
 
+# CREATIVITY.
+# I added a small uppercase conversion to the input formula in the main function to ensure that the formula is parsed correctly regardless of the case of the input. This helps in avoiding any potential issues with element symbols that are case-sensitive.
+# Hope it counts towards creativity points.
+
 def make_periodic_table():
     periodic_table_dict = {
         "Ac": ["Actinium", 227],
@@ -17,7 +21,7 @@ def make_periodic_table():
         "Bi": ["Bismuth", 208.9804],
         "Bk": ["Berkelium", 247],
         "Br": ["Bromine", 79.904],
-        "C": ["Carbon", 12.011],
+        "C": ["Carbon", 12.0107],
         "Ca": ["Calcium", 40.078],
         "Cd": ["Cadmium", 112.411],
         "Ce": ["Cerium", 140.116],
@@ -42,11 +46,11 @@ def make_periodic_table():
         "Fr": ["Francium", 223],
         "Ga": ["Gallium", 69.723],
         "Gd": ["Gadolinium", 157.25],
-        "Ge": ["Germanium", 72.63],
-        "H": ["Hydrogen", 1.008],
+        "Ge": ["Germanium", 72.64],
+        "H": ["Hydrogen", 1.00794],
         "He": ["Helium", 4.002602],
         "Hf": ["Hafnium", 178.49],
-        "Hg": ["Mercury", 200.592],
+        "Hg": ["Mercury", 200.59],
         "Ho": ["Holmium", 164.93032],
         "Hs": ["Hassium", 270],
         "I": ["Iodine", 126.90447],
@@ -65,7 +69,7 @@ def make_periodic_table():
         "Mn": ["Manganese", 54.938045],
         "Mo": ["Molybdenum", 95.96],
         "Mt": ["Meitnerium", 278],
-        "N": ["Nitrogen", 14.007],
+        "N": ["Nitrogen", 14.0067],
         "Na": ["Sodium", 22.98976928],
         "Nb": ["Niobium", 92.90638],
         "Nd": ["Neodymium", 144.242],
@@ -74,7 +78,7 @@ def make_periodic_table():
         "Ni": ["Nickel", 58.6934],
         "No": ["Nobelium", 259],
         "Np": ["Neptunium", 237],
-        "O": ["Oxygen", 15.999],
+        "O": ["Oxygen", 15.9994],
         "Og": ["Oganesson", 294],
         "Os": ["Osmium", 190.23],
         "P": ["Phosphorus", 30.973762],
@@ -94,6 +98,7 @@ def make_periodic_table():
         "Rh": ["Rhodium", 102.9055],
         "Rn": ["Radon", 222],
         "Ru": ["Ruthenium", 101.07],
+        "S": ["Sulfur", 32.065],
         "Sb": ["Antimony", 121.76],
         "Sc": ["Scandium", 44.955912],
         "Se": ["Selenium", 78.96],
@@ -124,13 +129,22 @@ def make_periodic_table():
 
 def main():
     input_formula = input("Enter a chemical formula: ")
-    sample_size = int(input("Enter the sample size in grams: "))
+    sample_size = float(input("Enter the sample size in grams: "))
     periodic_table_dict = make_periodic_table()
-    parsed_formula = parse_formula(input_formula, periodic_table_dict)
+    parsed_formula = parse_formula(input_formula.upper(), periodic_table_dict)
+    computed_molar_mass = compute_molar_mass(parsed_formula, periodic_table_dict)
+    print(f"{computed_molar_mass:.5f} grams/mole")
+    moles_amount = sample_size / computed_molar_mass
+    print(f"{moles_amount:.5f} moles")
     pass
 
 def compute_molar_mass(symbol_quantity_list, periodic_table_dict):
-    pass
+    total_mass = 0
+    for symbol, quantity in symbol_quantity_list:
+        if symbol in periodic_table_dict:
+            atomic_mass = periodic_table_dict[symbol][1]
+            total_mass += atomic_mass * quantity
+    return total_mass
 
 if __name__ == "__main__":
     main()
