@@ -1,0 +1,54 @@
+CSE 111 Proposal for a Student Chosen Program
+
+    (This is a proposal. All proposals are written with our best
+    knowledge at the beginning of a project. As we progress from the
+    beginning to the end of a project, we gain more knowledge, and we
+    change some of our proposed ideas. This is part of completing any
+    project and is fine.  However, we still must write a proposal so
+    that our teachers or supervisors know what we intend to do. Please
+    answer each of the following questions to the best of your
+    knowledge.)
+
+1. What is the title of your program? Kiosque. That's how we call a minimarket here in Argentina.
+
+2. What real-world problem will your program address or help to solve? It will be used as an inventory
+
+3. What will you learn from developing this program? I learned how to use functions and how to connect them with data bases using sqlite3
+
+4. What Python modules will your program use? sqlite3 and I planned to use tkinter, but I'm short on time
+
+    (Some examples are: csv, datetime, functools, matplotlib, math,
+    pandas, pytest, random, requests, and tkinter.)
+
+5. List the names of functions you will need? create_tables, receive_goods, register_sale, view_products, main
+
+    (Remember that the most reusable functions don't get user input and
+    don't print results but instead have parameters and return a result.
+    Functions that get user input and print results are important and do
+    useful work but are not easily reusable.)
+
+    (Remember also that it's hard to test functions that get user input
+    and print results. It's easy to test functions that don't get user
+    input and don't print results but instead have parameters and return
+    a result. Therefore, you should write most of your program functions
+    to have parameters and return a result.)
+
+6. List the names of the test functions you will write. 
+test_create_tables_creates_all_tables
+test_create_tables_can_run_trice
+
+test_receive_goods_creates_new_product
+test_receive_goods_adds_to_existing_stock
+test_receive_goods_rejects_non_numeric_quantity
+test_receive_goods_rejects_zero_quantity
+test_receive_goods_rejects_negative_price
+test_receive_goods_requires_code_and_name
+
+test_register_sale_reduces_stock_and_saves_sale
+test_register_sale_with_several_products
+test_register_sale_rejects_quantity_above_stock
+test_register_sale_unknown_code_is_ignored
+test_register_sale_cancelled_does_not_change_anything
+
+test_view_products_empty
+test_view_products_lists_products
